@@ -7,7 +7,8 @@ license: MIT
 metadata:
   hermes:
     tags: [delegation, efficiency, groq, token-optimization, protocol]
-    related_skills: []
+    related_skills: [pierced-tongue, caveman]
+    required_skills: [pierced-tongue, caveman]
   openclaw:
     tags: [delegation, efficiency, multi-model, token-optimization]
     skill_type: model_management
@@ -33,6 +34,31 @@ Natural Language (expensive)     Machine Language (efficient)
 └─────────────────────┘          └──────────────────────┘
         ~800 tokens                      ~200 tokens
          (62% savings!)
+```
+
+## Required Skills
+
+throw-rock requires these skills to function properly:
+
+### 🗣️ pierced-tongue (Transport Layer)
+**Required for:** Model-to-model communication transport
+- Provides HTTP/stdio/ACP transport protocols
+- Handles low-level message passing between models
+- Install: `git clone https://github.com/wizzleweasel/pierced-tongue.git`
+
+### 🪨 caveman (Language Compression)
+**Required for:** Token-efficient natural language output
+- Cuts 75% tokens via caveman-speak compression
+- Can compress throw-rock's natural language summaries
+- Install: `git clone https://github.com/juliusbrussee/caveman.git`
+
+### Dependency Chain
+```
+throw-rock (delegation protocol)
+    ↓ requires
+pierced-tongue (transport) + caveman (language compression)
+    ↓ enables
+Efficient model-to-model delegation (40-75% total savings)
 ```
 
 ## When to Use
