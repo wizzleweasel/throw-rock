@@ -68,8 +68,44 @@ Triggers automatically when:
 - Need to reduce token costs
 - Batch processing multiple operations
 - Repetitive tool calls
-- Background processing
 
+## Notification Rule — When to Say "throw a rock"
+
+**ONLY say "throw a rock" when:**
+1. ✅ Delegating to helper model via `delegate_task`
+2. ✅ Using compressed formats (Tier 1 Compact JSON or Tier 2 Symbolic)
+3. ✅ Actual model-to-model delegation happening
+
+**Format:** `throw a rock, (delegation task) (random_hex_code)`
+
+**Example CORRECT:**
+```
+throw a rock, delegate codebase analysis (a3f7c2b)
+
+→analyze(pa:/app,focus:arch)∴
+[actually uses delegate_task with compact format]
+```
+
+**Do NOT say "throw a rock" for:**
+- ❌ Normal file reads (main model processes)
+- ❌ Terminal commands (main model runs)
+- ❌ Conversational responses
+- ❌ Any task NOT using delegation protocol
+
+### Normal Tasks Use Normal Notification
+
+For tasks processed by main model (me), just describe normally:
+
+**Example:**
+```
+Let me read that file for you...
+
+[actual file read using read_file tool]
+```
+
+NOT: `throw a rock, read file (abc123)` ❌
+
+## Protocol
 ## Protocol
 
 ### Standard JSON Format (Baseline)
