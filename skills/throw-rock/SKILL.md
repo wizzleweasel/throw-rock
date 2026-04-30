@@ -46,21 +46,63 @@ Triggers automatically when:
 
 ## Protocol
 
-### Task Format (Main → Helper)
+### Standard JSON Format (Baseline)
 
 ```json
 {
   "task_id": "unique_id",
   "action": "execute_code|read_file|terminal|search_files|write_file|patch",
   "params": {},
-  "context": {
-    "project_path": "/path/to/project",
-    "constraints": ["no_side_effects"]
-  },
+  "context": {"project_path": "/path/to/project", "constraints": ["no_side_effects"]},
   "output_format": "json|raw|summary",
   "reasoning": false
 }
 ```
+
+### 🚀 Compressed Formats (60-90% Token Savings)
+
+#### Tier 1: Compact Short-Key JSON (66% savings)
+
+Replace long keys with 1-2 char codes, remove whitespace:
+
+| Original Key | Short Key | Action Mapping |
+|--------------|-----------|---------------|
+| `action` | `a` | `rf`=read_file, `tr`=terminal, `wf`=write_file, `pt`=patch, `sf`=search_files, `ex`=execute_code |
+| `params` | `p` | `pa`=path, `cmd`=command, `con`=content |
+| `output_format` | `o` | `j`=json, `r`=raw, `s`=summary |
+| `reasoning` | `r` | `0`=false, `1`=true |
+| `task_id` | `t` | unique identifier |
+
+**Example:**
+- Standard (82 tokens): `{"action": "read_file", "params": {"path": "main.py"}, "output_format": "json"}`
+- Compact (28 tokens): `{"a":"rf","p":{"pa":"main.py"},"o":"j"}`
+
+#### Tier 2: Symbolic Notation (85% savings)
+
+Mathematical/symbolic shorthand for common operations:
+
+| Symbol | Meaning |
+|--------|---------|
+| `→` | Delegate/throw rock |
+| `rf()` | read_file |
+| `tr()` | terminal |
+| `wf()` | write_file |
+| `pt()` | patch |
+| `pa:` | path parameter |
+| `cmd:` | command parameter |
+| `∴` | Result delimiter |
+
+**Example (12 tokens):**  
+`→rf(pa:main.py)∴`
+
+#### Tier 3: Encoded Compact (90% savings)
+
+Base64-encode Tier 1 JSON with symbolic wrapper:
+
+**Example (8 tokens):**  
+`ρeyJhIjoicmYiLCJwIjp7InBhIjoibWFpbi5weSJ9LCJvIjoiaiJ9*`
+
+*(Decodes to: `{"a":"rf","p":{"pa":"main.py"},"o":"j"}`)*
 
 ### Response Format (Helper → Main)
 
@@ -69,11 +111,13 @@ Triggers automatically when:
   "task_id": "unique_id",
   "status": "success|error|partial",
   "data": {},
-  "metrics": {
-    "tokens_used": 123,
-    "execution_time_ms": 456
-  }
+  "metrics": {"tokens_used": 123, "execution_time_ms": 456}
 }
+```
+
+**Compact Response (Tier 1):**
+```json
+{"t":"id","s":"ok","d":{},"m":{"tu":123,"t":456}}
 ```
 
 ## Hermes Agent
